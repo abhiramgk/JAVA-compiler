@@ -1,0 +1,2236 @@
+Terminals unused in grammar
+
+   T_FLOAT
+   T_STRS
+   T_NEW
+   T_NOT
+   T_BITOR
+   T_BITAND
+   T_BITXOR
+   T_LSHFT
+   T_RSHFT
+
+
+Grammar
+
+    0 $accept: START $end
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' T_ID ')' T_OB S T_CB T_CB
+
+    2 MODIFIER: W1 W2
+
+    3 W1: T_PUBLIC
+    4   | T_PRIVATE
+
+    5 W2: T_STATIC
+    6   | %empty
+
+    7 S: DECLR ';' S
+    8  | ASSGN1 ';' S
+    9  | IF ELSE S
+   10  | FOR T_OB S T_CB S
+   11  | UNREXPR
+   12  | %empty
+
+   13 UNREXPR: T_UADD EXPR
+   14        | T_USUB EXPR
+   15        | EXPR T_UADD
+   16        | EXPR T_USUB
+   17        | LOGICALOREXPR
+
+   18 FOR: T_FOR '(' ';' ';' ')'
+   19    | T_FOR '(' INIT ';' ';' ')'
+   20    | T_FOR '(' INIT ';' LOGICALOREXPR ';' ')'
+   21    | T_FOR '(' INIT ';' ';' ADDEXPR ')'
+   22    | T_FOR '(' ';' LOGICALOREXPR ';' ')'
+   23    | T_FOR '(' ';' LOGICALOREXPR ';' UNREXPR ')'
+   24    | T_FOR '(' INIT ';' LOGICALOREXPR ';' UNREXPR ')'
+   25    | T_FOR '(' ';' ';' ADDEXPR ')'
+
+   26 IF: T_IF '(' LOGICALOREXPR ')' T_OB S T_CB
+
+   27 ELSE: T_ELSE T_OB S T_CB
+   28     | %empty
+
+   29 DECLR: VARIABLE
+   30      | ARRAY
+
+   31 VARIABLE: TYPE T_ID T_ASSGN LOGICALOREXPR X
+   32         | TYPE T_ID X
+
+   33 ARRAY: TYPE BRACKETS T_ID
+   34      | TYPE T_ID BRACKETS
+
+   35 TYPE: T_INT
+   36     | T_DOUBLE
+   37     | T_CHAR
+   38     | T_STRING
+   39     | T_VOID
+
+   40 X: ',' ASSGN X
+   41  | ',' T_ID
+   42  | %empty
+
+   43 BRACKETS: WI
+   44         | WOI
+
+   45 WI: '[' INDEX ']' WI
+   46   | '[' INDEX ']'
+
+   47 WOI: '[' ']' WOI
+   48    | '[' ']'
+
+   49 INDEX: T_ID
+   50      | T_NUM
+
+   51 ASSGN: T_ID ASSGNOPR LOGICALOREXPR
+
+   52 ASSGN1: VARIABLEA
+   53       | ARRAYA
+
+   54 VARIABLEA: T_ID ASSGNOPR LOGICALOREXPR
+
+   55 ARRAYA: %empty
+
+   56 INIT: VARIABLE
+   57     | VARIABLEA
+
+   58 ASSGNOPR: T_ASSGN
+   59         | T_MULASSGN
+   60         | T_DIVASSGN
+   61         | T_MODASSGN
+   62         | T_ADDASSGN
+   63         | T_SUBASSGN
+   64         | T_LSHASSGN
+   65         | T_RSHASSGN
+   66         | T_ANDASSGN
+   67         | T_XORASSGN
+   68         | T_ORASSGN
+
+   69 LOGICALOREXPR: LOGICALOREXPR T_LOGOR LOGICALANDEXPR
+   70              | LOGICALANDEXPR
+
+   71 LOGICALANDEXPR: LOGICALANDEXPR T_LOGAND EQUALITYEXPR
+   72               | EQUALITYEXPR
+
+   73 EQUALITYEXPR: EQUALITYEXPR T_EQ RELEXPR
+   74             | EQUALITYEXPR T_NEQ RELEXPR
+   75             | RELEXPR
+
+   76 RELEXPR: RELEXPR T_LT ADDEXPR
+   77        | RELEXPR T_GT ADDEXPR
+   78        | RELEXPR T_LTEQ ADDEXPR
+   79        | RELEXPR T_GTEQ ADDEXPR
+   80        | ADDEXPR
+
+   81 ADDEXPR: ADDEXPR T_ADD MULTEXPR
+   82        | ADDEXPR T_SUB MULTEXPR
+   83        | MULTEXPR
+
+   84 MULTEXPR: MULTEXPR T_MUL EXPR
+   85         | MULTEXPR T_DIV EXPR
+   86         | MULTEXPR T_MOD EXPR
+   87         | EXPR
+
+   88 EXPR: T_ID
+   89     | T_NUM
+   90     | '(' LOGICALOREXPR ')'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 1 18 19 20 21 22 23 24 25 26 90
+')' (41) 1 18 19 20 21 22 23 24 25 26 90
+',' (44) 40 41
+';' (59) 7 8 18 19 20 21 22 23 24 25
+'[' (91) 1 45 46 47 48
+']' (93) 1 45 46 47 48
+error (256)
+T_MAIN (258) 1
+T_ID (259) 1 31 32 33 34 41 49 51 54 88
+T_NUM (260) 50 89
+T_PUBLIC (261) 3
+T_STATIC (262) 5
+T_VOID (263) 39
+T_CLASS (264) 1
+T_PRIVATE (265) 4
+T_IF (266) 26
+T_ELSE (267) 27
+T_FOR (268) 18 19 20 21 22 23 24 25
+T_CHAR (269) 37
+T_INT (270) 35
+T_FLOAT (271)
+T_DOUBLE (272) 36
+T_STRING (273) 1 38
+T_STRS (274)
+T_NEW (275)
+T_LOGOR (276) 69
+T_LOGAND (277) 71
+T_NOT (278)
+T_BITOR (279)
+T_BITAND (280)
+T_BITXOR (281)
+T_ASSGN (282) 31 58
+T_LT (283) 76
+T_GT (284) 77
+T_LTEQ (285) 78
+T_GTEQ (286) 79
+T_EQ (287) 73
+T_NEQ (288) 74
+T_MULASSGN (289) 59
+T_DIVASSGN (290) 60
+T_MODASSGN (291) 61
+T_ADDASSGN (292) 62
+T_SUBASSGN (293) 63
+T_LSHASSGN (294) 64
+T_RSHASSGN (295) 65
+T_ANDASSGN (296) 66
+T_XORASSGN (297) 67
+T_ORASSGN (298) 68
+T_LSHFT (299)
+T_RSHFT (300)
+T_ADD (301) 81
+T_SUB (302) 82
+T_MUL (303) 84
+T_DIV (304) 85
+T_MOD (305) 86
+T_UADD (306) 13 15
+T_USUB (307) 14 16
+T_OB (308) 1 10 26 27
+T_CB (309) 1 10 26 27
+
+
+Nonterminals, with rules where they appear
+
+$accept (61)
+    on left: 0
+START (62)
+    on left: 1, on right: 0
+MODIFIER (63)
+    on left: 2, on right: 1
+W1 (64)
+    on left: 3 4, on right: 2
+W2 (65)
+    on left: 5 6, on right: 2
+S (66)
+    on left: 7 8 9 10 11 12, on right: 1 7 8 9 10 26 27
+UNREXPR (67)
+    on left: 13 14 15 16 17, on right: 11 23 24
+FOR (68)
+    on left: 18 19 20 21 22 23 24 25, on right: 10
+IF (69)
+    on left: 26, on right: 9
+ELSE (70)
+    on left: 27 28, on right: 9
+DECLR (71)
+    on left: 29 30, on right: 7
+VARIABLE (72)
+    on left: 31 32, on right: 29 56
+ARRAY (73)
+    on left: 33 34, on right: 30
+TYPE (74)
+    on left: 35 36 37 38 39, on right: 1 31 32 33 34
+X (75)
+    on left: 40 41 42, on right: 31 32 40
+BRACKETS (76)
+    on left: 43 44, on right: 33 34
+WI (77)
+    on left: 45 46, on right: 43 45
+WOI (78)
+    on left: 47 48, on right: 44 47
+INDEX (79)
+    on left: 49 50, on right: 45 46
+ASSGN (80)
+    on left: 51, on right: 40
+ASSGN1 (81)
+    on left: 52 53, on right: 8
+VARIABLEA (82)
+    on left: 54, on right: 52 57
+ARRAYA (83)
+    on left: 55, on right: 53
+INIT (84)
+    on left: 56 57, on right: 19 20 21 24
+ASSGNOPR (85)
+    on left: 58 59 60 61 62 63 64 65 66 67 68, on right: 51 54
+LOGICALOREXPR (86)
+    on left: 69 70, on right: 17 20 22 23 24 26 31 51 54 69 90
+LOGICALANDEXPR (87)
+    on left: 71 72, on right: 69 70 71
+EQUALITYEXPR (88)
+    on left: 73 74 75, on right: 71 72 73 74
+RELEXPR (89)
+    on left: 76 77 78 79 80, on right: 73 74 75 76 77 78 79
+ADDEXPR (90)
+    on left: 81 82 83, on right: 21 25 76 77 78 79 80 81 82
+MULTEXPR (91)
+    on left: 84 85 86 87, on right: 81 82 83 84 85 86
+EXPR (92)
+    on left: 88 89 90, on right: 13 14 15 16 84 85 86 87
+
+
+State 0
+
+    0 $accept: . START $end
+
+    T_PUBLIC   shift, and go to state 1
+    T_PRIVATE  shift, and go to state 2
+
+    START     go to state 3
+    MODIFIER  go to state 4
+    W1        go to state 5
+
+
+State 1
+
+    3 W1: T_PUBLIC .
+
+    $default  reduce using rule 3 (W1)
+
+
+State 2
+
+    4 W1: T_PRIVATE .
+
+    $default  reduce using rule 4 (W1)
+
+
+State 3
+
+    0 $accept: START . $end
+
+    $end  shift, and go to state 6
+
+
+State 4
+
+    1 START: MODIFIER . T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' T_ID ')' T_OB S T_CB T_CB
+
+    T_CLASS  shift, and go to state 7
+
+
+State 5
+
+    2 MODIFIER: W1 . W2
+
+    T_STATIC  shift, and go to state 8
+
+    $default  reduce using rule 6 (W2)
+
+    W2  go to state 9
+
+
+State 6
+
+    0 $accept: START $end .
+
+    $default  accept
+
+
+State 7
+
+    1 START: MODIFIER T_CLASS . T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' T_ID ')' T_OB S T_CB T_CB
+
+    T_ID  shift, and go to state 10
+
+
+State 8
+
+    5 W2: T_STATIC .
+
+    $default  reduce using rule 5 (W2)
+
+
+State 9
+
+    2 MODIFIER: W1 W2 .
+
+    $default  reduce using rule 2 (MODIFIER)
+
+
+State 10
+
+    1 START: MODIFIER T_CLASS T_ID . T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' T_ID ')' T_OB S T_CB T_CB
+
+    T_OB  shift, and go to state 11
+
+
+State 11
+
+    1 START: MODIFIER T_CLASS T_ID T_OB . MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' T_ID ')' T_OB S T_CB T_CB
+
+    T_PUBLIC   shift, and go to state 1
+    T_PRIVATE  shift, and go to state 2
+
+    MODIFIER  go to state 12
+    W1        go to state 5
+
+
+State 12
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER . TYPE T_MAIN '(' T_STRING '[' ']' T_ID ')' T_OB S T_CB T_CB
+
+    T_VOID    shift, and go to state 13
+    T_CHAR    shift, and go to state 14
+    T_INT     shift, and go to state 15
+    T_DOUBLE  shift, and go to state 16
+    T_STRING  shift, and go to state 17
+
+    TYPE  go to state 18
+
+
+State 13
+
+   39 TYPE: T_VOID .
+
+    $default  reduce using rule 39 (TYPE)
+
+
+State 14
+
+   37 TYPE: T_CHAR .
+
+    $default  reduce using rule 37 (TYPE)
+
+
+State 15
+
+   35 TYPE: T_INT .
+
+    $default  reduce using rule 35 (TYPE)
+
+
+State 16
+
+   36 TYPE: T_DOUBLE .
+
+    $default  reduce using rule 36 (TYPE)
+
+
+State 17
+
+   38 TYPE: T_STRING .
+
+    $default  reduce using rule 38 (TYPE)
+
+
+State 18
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE . T_MAIN '(' T_STRING '[' ']' T_ID ')' T_OB S T_CB T_CB
+
+    T_MAIN  shift, and go to state 19
+
+
+State 19
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN . '(' T_STRING '[' ']' T_ID ')' T_OB S T_CB T_CB
+
+    '('  shift, and go to state 20
+
+
+State 20
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' . T_STRING '[' ']' T_ID ')' T_OB S T_CB T_CB
+
+    T_STRING  shift, and go to state 21
+
+
+State 21
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING . '[' ']' T_ID ')' T_OB S T_CB T_CB
+
+    '['  shift, and go to state 22
+
+
+State 22
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' . ']' T_ID ')' T_OB S T_CB T_CB
+
+    ']'  shift, and go to state 23
+
+
+State 23
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' . T_ID ')' T_OB S T_CB T_CB
+
+    T_ID  shift, and go to state 24
+
+
+State 24
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' T_ID . ')' T_OB S T_CB T_CB
+
+    ')'  shift, and go to state 25
+
+
+State 25
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' T_ID ')' . T_OB S T_CB T_CB
+
+    T_OB  shift, and go to state 26
+
+
+State 26
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' T_ID ')' T_OB . S T_CB T_CB
+
+    T_ID      shift, and go to state 27
+    T_NUM     shift, and go to state 28
+    T_VOID    shift, and go to state 13
+    T_IF      shift, and go to state 29
+    T_FOR     shift, and go to state 30
+    T_CHAR    shift, and go to state 14
+    T_INT     shift, and go to state 15
+    T_DOUBLE  shift, and go to state 16
+    T_STRING  shift, and go to state 17
+    T_UADD    shift, and go to state 31
+    T_USUB    shift, and go to state 32
+    '('       shift, and go to state 33
+
+    ';'       reduce using rule 55 (ARRAYA)
+    $default  reduce using rule 12 (S)
+
+    S               go to state 34
+    UNREXPR         go to state 35
+    FOR             go to state 36
+    IF              go to state 37
+    DECLR           go to state 38
+    VARIABLE        go to state 39
+    ARRAY           go to state 40
+    TYPE            go to state 41
+    ASSGN1          go to state 42
+    VARIABLEA       go to state 43
+    ARRAYA          go to state 44
+    LOGICALOREXPR   go to state 45
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 51
+
+
+State 27
+
+   54 VARIABLEA: T_ID . ASSGNOPR LOGICALOREXPR
+   88 EXPR: T_ID .
+
+    T_ASSGN     shift, and go to state 52
+    T_MULASSGN  shift, and go to state 53
+    T_DIVASSGN  shift, and go to state 54
+    T_MODASSGN  shift, and go to state 55
+    T_ADDASSGN  shift, and go to state 56
+    T_SUBASSGN  shift, and go to state 57
+    T_LSHASSGN  shift, and go to state 58
+    T_RSHASSGN  shift, and go to state 59
+    T_ANDASSGN  shift, and go to state 60
+    T_XORASSGN  shift, and go to state 61
+    T_ORASSGN   shift, and go to state 62
+
+    $default  reduce using rule 88 (EXPR)
+
+    ASSGNOPR  go to state 63
+
+
+State 28
+
+   89 EXPR: T_NUM .
+
+    $default  reduce using rule 89 (EXPR)
+
+
+State 29
+
+   26 IF: T_IF . '(' LOGICALOREXPR ')' T_OB S T_CB
+
+    '('  shift, and go to state 64
+
+
+State 30
+
+   18 FOR: T_FOR . '(' ';' ';' ')'
+   19    | T_FOR . '(' INIT ';' ';' ')'
+   20    | T_FOR . '(' INIT ';' LOGICALOREXPR ';' ')'
+   21    | T_FOR . '(' INIT ';' ';' ADDEXPR ')'
+   22    | T_FOR . '(' ';' LOGICALOREXPR ';' ')'
+   23    | T_FOR . '(' ';' LOGICALOREXPR ';' UNREXPR ')'
+   24    | T_FOR . '(' INIT ';' LOGICALOREXPR ';' UNREXPR ')'
+   25    | T_FOR . '(' ';' ';' ADDEXPR ')'
+
+    '('  shift, and go to state 65
+
+
+State 31
+
+   13 UNREXPR: T_UADD . EXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    EXPR  go to state 67
+
+
+State 32
+
+   14 UNREXPR: T_USUB . EXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    EXPR  go to state 68
+
+
+State 33
+
+   90 EXPR: '(' . LOGICALOREXPR ')'
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    LOGICALOREXPR   go to state 69
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 70
+
+
+State 34
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' T_ID ')' T_OB S . T_CB T_CB
+
+    T_CB  shift, and go to state 71
+
+
+State 35
+
+   11 S: UNREXPR .
+
+    $default  reduce using rule 11 (S)
+
+
+State 36
+
+   10 S: FOR . T_OB S T_CB S
+
+    T_OB  shift, and go to state 72
+
+
+State 37
+
+    9 S: IF . ELSE S
+
+    T_ELSE  shift, and go to state 73
+
+    $default  reduce using rule 28 (ELSE)
+
+    ELSE  go to state 74
+
+
+State 38
+
+    7 S: DECLR . ';' S
+
+    ';'  shift, and go to state 75
+
+
+State 39
+
+   29 DECLR: VARIABLE .
+
+    $default  reduce using rule 29 (DECLR)
+
+
+State 40
+
+   30 DECLR: ARRAY .
+
+    $default  reduce using rule 30 (DECLR)
+
+
+State 41
+
+   31 VARIABLE: TYPE . T_ID T_ASSGN LOGICALOREXPR X
+   32         | TYPE . T_ID X
+   33 ARRAY: TYPE . BRACKETS T_ID
+   34      | TYPE . T_ID BRACKETS
+
+    T_ID  shift, and go to state 76
+    '['   shift, and go to state 77
+
+    BRACKETS  go to state 78
+    WI        go to state 79
+    WOI       go to state 80
+
+
+State 42
+
+    8 S: ASSGN1 . ';' S
+
+    ';'  shift, and go to state 81
+
+
+State 43
+
+   52 ASSGN1: VARIABLEA .
+
+    $default  reduce using rule 52 (ASSGN1)
+
+
+State 44
+
+   53 ASSGN1: ARRAYA .
+
+    $default  reduce using rule 53 (ASSGN1)
+
+
+State 45
+
+   17 UNREXPR: LOGICALOREXPR .
+   69 LOGICALOREXPR: LOGICALOREXPR . T_LOGOR LOGICALANDEXPR
+
+    T_LOGOR  shift, and go to state 82
+
+    $default  reduce using rule 17 (UNREXPR)
+
+
+State 46
+
+   70 LOGICALOREXPR: LOGICALANDEXPR .
+   71 LOGICALANDEXPR: LOGICALANDEXPR . T_LOGAND EQUALITYEXPR
+
+    T_LOGAND  shift, and go to state 83
+
+    $default  reduce using rule 70 (LOGICALOREXPR)
+
+
+State 47
+
+   72 LOGICALANDEXPR: EQUALITYEXPR .
+   73 EQUALITYEXPR: EQUALITYEXPR . T_EQ RELEXPR
+   74             | EQUALITYEXPR . T_NEQ RELEXPR
+
+    T_EQ   shift, and go to state 84
+    T_NEQ  shift, and go to state 85
+
+    $default  reduce using rule 72 (LOGICALANDEXPR)
+
+
+State 48
+
+   75 EQUALITYEXPR: RELEXPR .
+   76 RELEXPR: RELEXPR . T_LT ADDEXPR
+   77        | RELEXPR . T_GT ADDEXPR
+   78        | RELEXPR . T_LTEQ ADDEXPR
+   79        | RELEXPR . T_GTEQ ADDEXPR
+
+    T_LT    shift, and go to state 86
+    T_GT    shift, and go to state 87
+    T_LTEQ  shift, and go to state 88
+    T_GTEQ  shift, and go to state 89
+
+    $default  reduce using rule 75 (EQUALITYEXPR)
+
+
+State 49
+
+   80 RELEXPR: ADDEXPR .
+   81 ADDEXPR: ADDEXPR . T_ADD MULTEXPR
+   82        | ADDEXPR . T_SUB MULTEXPR
+
+    T_ADD  shift, and go to state 90
+    T_SUB  shift, and go to state 91
+
+    $default  reduce using rule 80 (RELEXPR)
+
+
+State 50
+
+   83 ADDEXPR: MULTEXPR .
+   84 MULTEXPR: MULTEXPR . T_MUL EXPR
+   85         | MULTEXPR . T_DIV EXPR
+   86         | MULTEXPR . T_MOD EXPR
+
+    T_MUL  shift, and go to state 92
+    T_DIV  shift, and go to state 93
+    T_MOD  shift, and go to state 94
+
+    $default  reduce using rule 83 (ADDEXPR)
+
+
+State 51
+
+   15 UNREXPR: EXPR . T_UADD
+   16        | EXPR . T_USUB
+   87 MULTEXPR: EXPR .
+
+    T_UADD  shift, and go to state 95
+    T_USUB  shift, and go to state 96
+
+    $default  reduce using rule 87 (MULTEXPR)
+
+
+State 52
+
+   58 ASSGNOPR: T_ASSGN .
+
+    $default  reduce using rule 58 (ASSGNOPR)
+
+
+State 53
+
+   59 ASSGNOPR: T_MULASSGN .
+
+    $default  reduce using rule 59 (ASSGNOPR)
+
+
+State 54
+
+   60 ASSGNOPR: T_DIVASSGN .
+
+    $default  reduce using rule 60 (ASSGNOPR)
+
+
+State 55
+
+   61 ASSGNOPR: T_MODASSGN .
+
+    $default  reduce using rule 61 (ASSGNOPR)
+
+
+State 56
+
+   62 ASSGNOPR: T_ADDASSGN .
+
+    $default  reduce using rule 62 (ASSGNOPR)
+
+
+State 57
+
+   63 ASSGNOPR: T_SUBASSGN .
+
+    $default  reduce using rule 63 (ASSGNOPR)
+
+
+State 58
+
+   64 ASSGNOPR: T_LSHASSGN .
+
+    $default  reduce using rule 64 (ASSGNOPR)
+
+
+State 59
+
+   65 ASSGNOPR: T_RSHASSGN .
+
+    $default  reduce using rule 65 (ASSGNOPR)
+
+
+State 60
+
+   66 ASSGNOPR: T_ANDASSGN .
+
+    $default  reduce using rule 66 (ASSGNOPR)
+
+
+State 61
+
+   67 ASSGNOPR: T_XORASSGN .
+
+    $default  reduce using rule 67 (ASSGNOPR)
+
+
+State 62
+
+   68 ASSGNOPR: T_ORASSGN .
+
+    $default  reduce using rule 68 (ASSGNOPR)
+
+
+State 63
+
+   54 VARIABLEA: T_ID ASSGNOPR . LOGICALOREXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    LOGICALOREXPR   go to state 97
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 70
+
+
+State 64
+
+   26 IF: T_IF '(' . LOGICALOREXPR ')' T_OB S T_CB
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    LOGICALOREXPR   go to state 98
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 70
+
+
+State 65
+
+   18 FOR: T_FOR '(' . ';' ';' ')'
+   19    | T_FOR '(' . INIT ';' ';' ')'
+   20    | T_FOR '(' . INIT ';' LOGICALOREXPR ';' ')'
+   21    | T_FOR '(' . INIT ';' ';' ADDEXPR ')'
+   22    | T_FOR '(' . ';' LOGICALOREXPR ';' ')'
+   23    | T_FOR '(' . ';' LOGICALOREXPR ';' UNREXPR ')'
+   24    | T_FOR '(' . INIT ';' LOGICALOREXPR ';' UNREXPR ')'
+   25    | T_FOR '(' . ';' ';' ADDEXPR ')'
+
+    T_ID      shift, and go to state 99
+    T_VOID    shift, and go to state 13
+    T_CHAR    shift, and go to state 14
+    T_INT     shift, and go to state 15
+    T_DOUBLE  shift, and go to state 16
+    T_STRING  shift, and go to state 17
+    ';'       shift, and go to state 100
+
+    VARIABLE   go to state 101
+    TYPE       go to state 102
+    VARIABLEA  go to state 103
+    INIT       go to state 104
+
+
+State 66
+
+   88 EXPR: T_ID .
+
+    $default  reduce using rule 88 (EXPR)
+
+
+State 67
+
+   13 UNREXPR: T_UADD EXPR .
+
+    $default  reduce using rule 13 (UNREXPR)
+
+
+State 68
+
+   14 UNREXPR: T_USUB EXPR .
+
+    $default  reduce using rule 14 (UNREXPR)
+
+
+State 69
+
+   69 LOGICALOREXPR: LOGICALOREXPR . T_LOGOR LOGICALANDEXPR
+   90 EXPR: '(' LOGICALOREXPR . ')'
+
+    T_LOGOR  shift, and go to state 82
+    ')'      shift, and go to state 105
+
+
+State 70
+
+   87 MULTEXPR: EXPR .
+
+    $default  reduce using rule 87 (MULTEXPR)
+
+
+State 71
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' T_ID ')' T_OB S T_CB . T_CB
+
+    T_CB  shift, and go to state 106
+
+
+State 72
+
+   10 S: FOR T_OB . S T_CB S
+
+    T_ID      shift, and go to state 27
+    T_NUM     shift, and go to state 28
+    T_VOID    shift, and go to state 13
+    T_IF      shift, and go to state 29
+    T_FOR     shift, and go to state 30
+    T_CHAR    shift, and go to state 14
+    T_INT     shift, and go to state 15
+    T_DOUBLE  shift, and go to state 16
+    T_STRING  shift, and go to state 17
+    T_UADD    shift, and go to state 31
+    T_USUB    shift, and go to state 32
+    '('       shift, and go to state 33
+
+    ';'       reduce using rule 55 (ARRAYA)
+    $default  reduce using rule 12 (S)
+
+    S               go to state 107
+    UNREXPR         go to state 35
+    FOR             go to state 36
+    IF              go to state 37
+    DECLR           go to state 38
+    VARIABLE        go to state 39
+    ARRAY           go to state 40
+    TYPE            go to state 41
+    ASSGN1          go to state 42
+    VARIABLEA       go to state 43
+    ARRAYA          go to state 44
+    LOGICALOREXPR   go to state 45
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 51
+
+
+State 73
+
+   27 ELSE: T_ELSE . T_OB S T_CB
+
+    T_OB  shift, and go to state 108
+
+
+State 74
+
+    9 S: IF ELSE . S
+
+    T_ID      shift, and go to state 27
+    T_NUM     shift, and go to state 28
+    T_VOID    shift, and go to state 13
+    T_IF      shift, and go to state 29
+    T_FOR     shift, and go to state 30
+    T_CHAR    shift, and go to state 14
+    T_INT     shift, and go to state 15
+    T_DOUBLE  shift, and go to state 16
+    T_STRING  shift, and go to state 17
+    T_UADD    shift, and go to state 31
+    T_USUB    shift, and go to state 32
+    '('       shift, and go to state 33
+
+    ';'       reduce using rule 55 (ARRAYA)
+    $default  reduce using rule 12 (S)
+
+    S               go to state 109
+    UNREXPR         go to state 35
+    FOR             go to state 36
+    IF              go to state 37
+    DECLR           go to state 38
+    VARIABLE        go to state 39
+    ARRAY           go to state 40
+    TYPE            go to state 41
+    ASSGN1          go to state 42
+    VARIABLEA       go to state 43
+    ARRAYA          go to state 44
+    LOGICALOREXPR   go to state 45
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 51
+
+
+State 75
+
+    7 S: DECLR ';' . S
+
+    T_ID      shift, and go to state 27
+    T_NUM     shift, and go to state 28
+    T_VOID    shift, and go to state 13
+    T_IF      shift, and go to state 29
+    T_FOR     shift, and go to state 30
+    T_CHAR    shift, and go to state 14
+    T_INT     shift, and go to state 15
+    T_DOUBLE  shift, and go to state 16
+    T_STRING  shift, and go to state 17
+    T_UADD    shift, and go to state 31
+    T_USUB    shift, and go to state 32
+    '('       shift, and go to state 33
+
+    ';'       reduce using rule 55 (ARRAYA)
+    $default  reduce using rule 12 (S)
+
+    S               go to state 110
+    UNREXPR         go to state 35
+    FOR             go to state 36
+    IF              go to state 37
+    DECLR           go to state 38
+    VARIABLE        go to state 39
+    ARRAY           go to state 40
+    TYPE            go to state 41
+    ASSGN1          go to state 42
+    VARIABLEA       go to state 43
+    ARRAYA          go to state 44
+    LOGICALOREXPR   go to state 45
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 51
+
+
+State 76
+
+   31 VARIABLE: TYPE T_ID . T_ASSGN LOGICALOREXPR X
+   32         | TYPE T_ID . X
+   34 ARRAY: TYPE T_ID . BRACKETS
+
+    T_ASSGN  shift, and go to state 111
+    '['      shift, and go to state 77
+    ','      shift, and go to state 112
+
+    $default  reduce using rule 42 (X)
+
+    X         go to state 113
+    BRACKETS  go to state 114
+    WI        go to state 79
+    WOI       go to state 80
+
+
+State 77
+
+   45 WI: '[' . INDEX ']' WI
+   46   | '[' . INDEX ']'
+   47 WOI: '[' . ']' WOI
+   48    | '[' . ']'
+
+    T_ID   shift, and go to state 115
+    T_NUM  shift, and go to state 116
+    ']'    shift, and go to state 117
+
+    INDEX  go to state 118
+
+
+State 78
+
+   33 ARRAY: TYPE BRACKETS . T_ID
+
+    T_ID  shift, and go to state 119
+
+
+State 79
+
+   43 BRACKETS: WI .
+
+    $default  reduce using rule 43 (BRACKETS)
+
+
+State 80
+
+   44 BRACKETS: WOI .
+
+    $default  reduce using rule 44 (BRACKETS)
+
+
+State 81
+
+    8 S: ASSGN1 ';' . S
+
+    T_ID      shift, and go to state 27
+    T_NUM     shift, and go to state 28
+    T_VOID    shift, and go to state 13
+    T_IF      shift, and go to state 29
+    T_FOR     shift, and go to state 30
+    T_CHAR    shift, and go to state 14
+    T_INT     shift, and go to state 15
+    T_DOUBLE  shift, and go to state 16
+    T_STRING  shift, and go to state 17
+    T_UADD    shift, and go to state 31
+    T_USUB    shift, and go to state 32
+    '('       shift, and go to state 33
+
+    ';'       reduce using rule 55 (ARRAYA)
+    $default  reduce using rule 12 (S)
+
+    S               go to state 120
+    UNREXPR         go to state 35
+    FOR             go to state 36
+    IF              go to state 37
+    DECLR           go to state 38
+    VARIABLE        go to state 39
+    ARRAY           go to state 40
+    TYPE            go to state 41
+    ASSGN1          go to state 42
+    VARIABLEA       go to state 43
+    ARRAYA          go to state 44
+    LOGICALOREXPR   go to state 45
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 51
+
+
+State 82
+
+   69 LOGICALOREXPR: LOGICALOREXPR T_LOGOR . LOGICALANDEXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    LOGICALANDEXPR  go to state 121
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 70
+
+
+State 83
+
+   71 LOGICALANDEXPR: LOGICALANDEXPR T_LOGAND . EQUALITYEXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    EQUALITYEXPR  go to state 122
+    RELEXPR       go to state 48
+    ADDEXPR       go to state 49
+    MULTEXPR      go to state 50
+    EXPR          go to state 70
+
+
+State 84
+
+   73 EQUALITYEXPR: EQUALITYEXPR T_EQ . RELEXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    RELEXPR   go to state 123
+    ADDEXPR   go to state 49
+    MULTEXPR  go to state 50
+    EXPR      go to state 70
+
+
+State 85
+
+   74 EQUALITYEXPR: EQUALITYEXPR T_NEQ . RELEXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    RELEXPR   go to state 124
+    ADDEXPR   go to state 49
+    MULTEXPR  go to state 50
+    EXPR      go to state 70
+
+
+State 86
+
+   76 RELEXPR: RELEXPR T_LT . ADDEXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    ADDEXPR   go to state 125
+    MULTEXPR  go to state 50
+    EXPR      go to state 70
+
+
+State 87
+
+   77 RELEXPR: RELEXPR T_GT . ADDEXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    ADDEXPR   go to state 126
+    MULTEXPR  go to state 50
+    EXPR      go to state 70
+
+
+State 88
+
+   78 RELEXPR: RELEXPR T_LTEQ . ADDEXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    ADDEXPR   go to state 127
+    MULTEXPR  go to state 50
+    EXPR      go to state 70
+
+
+State 89
+
+   79 RELEXPR: RELEXPR T_GTEQ . ADDEXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    ADDEXPR   go to state 128
+    MULTEXPR  go to state 50
+    EXPR      go to state 70
+
+
+State 90
+
+   81 ADDEXPR: ADDEXPR T_ADD . MULTEXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    MULTEXPR  go to state 129
+    EXPR      go to state 70
+
+
+State 91
+
+   82 ADDEXPR: ADDEXPR T_SUB . MULTEXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    MULTEXPR  go to state 130
+    EXPR      go to state 70
+
+
+State 92
+
+   84 MULTEXPR: MULTEXPR T_MUL . EXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    EXPR  go to state 131
+
+
+State 93
+
+   85 MULTEXPR: MULTEXPR T_DIV . EXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    EXPR  go to state 132
+
+
+State 94
+
+   86 MULTEXPR: MULTEXPR T_MOD . EXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    EXPR  go to state 133
+
+
+State 95
+
+   15 UNREXPR: EXPR T_UADD .
+
+    $default  reduce using rule 15 (UNREXPR)
+
+
+State 96
+
+   16 UNREXPR: EXPR T_USUB .
+
+    $default  reduce using rule 16 (UNREXPR)
+
+
+State 97
+
+   54 VARIABLEA: T_ID ASSGNOPR LOGICALOREXPR .
+   69 LOGICALOREXPR: LOGICALOREXPR . T_LOGOR LOGICALANDEXPR
+
+    T_LOGOR  shift, and go to state 82
+
+    $default  reduce using rule 54 (VARIABLEA)
+
+
+State 98
+
+   26 IF: T_IF '(' LOGICALOREXPR . ')' T_OB S T_CB
+   69 LOGICALOREXPR: LOGICALOREXPR . T_LOGOR LOGICALANDEXPR
+
+    T_LOGOR  shift, and go to state 82
+    ')'      shift, and go to state 134
+
+
+State 99
+
+   54 VARIABLEA: T_ID . ASSGNOPR LOGICALOREXPR
+
+    T_ASSGN     shift, and go to state 52
+    T_MULASSGN  shift, and go to state 53
+    T_DIVASSGN  shift, and go to state 54
+    T_MODASSGN  shift, and go to state 55
+    T_ADDASSGN  shift, and go to state 56
+    T_SUBASSGN  shift, and go to state 57
+    T_LSHASSGN  shift, and go to state 58
+    T_RSHASSGN  shift, and go to state 59
+    T_ANDASSGN  shift, and go to state 60
+    T_XORASSGN  shift, and go to state 61
+    T_ORASSGN   shift, and go to state 62
+
+    ASSGNOPR  go to state 63
+
+
+State 100
+
+   18 FOR: T_FOR '(' ';' . ';' ')'
+   22    | T_FOR '(' ';' . LOGICALOREXPR ';' ')'
+   23    | T_FOR '(' ';' . LOGICALOREXPR ';' UNREXPR ')'
+   25    | T_FOR '(' ';' . ';' ADDEXPR ')'
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+    ';'    shift, and go to state 135
+
+    LOGICALOREXPR   go to state 136
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 70
+
+
+State 101
+
+   56 INIT: VARIABLE .
+
+    $default  reduce using rule 56 (INIT)
+
+
+State 102
+
+   31 VARIABLE: TYPE . T_ID T_ASSGN LOGICALOREXPR X
+   32         | TYPE . T_ID X
+
+    T_ID  shift, and go to state 137
+
+
+State 103
+
+   57 INIT: VARIABLEA .
+
+    $default  reduce using rule 57 (INIT)
+
+
+State 104
+
+   19 FOR: T_FOR '(' INIT . ';' ';' ')'
+   20    | T_FOR '(' INIT . ';' LOGICALOREXPR ';' ')'
+   21    | T_FOR '(' INIT . ';' ';' ADDEXPR ')'
+   24    | T_FOR '(' INIT . ';' LOGICALOREXPR ';' UNREXPR ')'
+
+    ';'  shift, and go to state 138
+
+
+State 105
+
+   90 EXPR: '(' LOGICALOREXPR ')' .
+
+    $default  reduce using rule 90 (EXPR)
+
+
+State 106
+
+    1 START: MODIFIER T_CLASS T_ID T_OB MODIFIER TYPE T_MAIN '(' T_STRING '[' ']' T_ID ')' T_OB S T_CB T_CB .
+
+    $default  reduce using rule 1 (START)
+
+
+State 107
+
+   10 S: FOR T_OB S . T_CB S
+
+    T_CB  shift, and go to state 139
+
+
+State 108
+
+   27 ELSE: T_ELSE T_OB . S T_CB
+
+    T_ID      shift, and go to state 27
+    T_NUM     shift, and go to state 28
+    T_VOID    shift, and go to state 13
+    T_IF      shift, and go to state 29
+    T_FOR     shift, and go to state 30
+    T_CHAR    shift, and go to state 14
+    T_INT     shift, and go to state 15
+    T_DOUBLE  shift, and go to state 16
+    T_STRING  shift, and go to state 17
+    T_UADD    shift, and go to state 31
+    T_USUB    shift, and go to state 32
+    '('       shift, and go to state 33
+
+    ';'       reduce using rule 55 (ARRAYA)
+    $default  reduce using rule 12 (S)
+
+    S               go to state 140
+    UNREXPR         go to state 35
+    FOR             go to state 36
+    IF              go to state 37
+    DECLR           go to state 38
+    VARIABLE        go to state 39
+    ARRAY           go to state 40
+    TYPE            go to state 41
+    ASSGN1          go to state 42
+    VARIABLEA       go to state 43
+    ARRAYA          go to state 44
+    LOGICALOREXPR   go to state 45
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 51
+
+
+State 109
+
+    9 S: IF ELSE S .
+
+    $default  reduce using rule 9 (S)
+
+
+State 110
+
+    7 S: DECLR ';' S .
+
+    $default  reduce using rule 7 (S)
+
+
+State 111
+
+   31 VARIABLE: TYPE T_ID T_ASSGN . LOGICALOREXPR X
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    LOGICALOREXPR   go to state 141
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 70
+
+
+State 112
+
+   40 X: ',' . ASSGN X
+   41  | ',' . T_ID
+
+    T_ID  shift, and go to state 142
+
+    ASSGN  go to state 143
+
+
+State 113
+
+   32 VARIABLE: TYPE T_ID X .
+
+    $default  reduce using rule 32 (VARIABLE)
+
+
+State 114
+
+   34 ARRAY: TYPE T_ID BRACKETS .
+
+    $default  reduce using rule 34 (ARRAY)
+
+
+State 115
+
+   49 INDEX: T_ID .
+
+    $default  reduce using rule 49 (INDEX)
+
+
+State 116
+
+   50 INDEX: T_NUM .
+
+    $default  reduce using rule 50 (INDEX)
+
+
+State 117
+
+   47 WOI: '[' ']' . WOI
+   48    | '[' ']' .
+
+    '['  shift, and go to state 144
+
+    $default  reduce using rule 48 (WOI)
+
+    WOI  go to state 145
+
+
+State 118
+
+   45 WI: '[' INDEX . ']' WI
+   46   | '[' INDEX . ']'
+
+    ']'  shift, and go to state 146
+
+
+State 119
+
+   33 ARRAY: TYPE BRACKETS T_ID .
+
+    $default  reduce using rule 33 (ARRAY)
+
+
+State 120
+
+    8 S: ASSGN1 ';' S .
+
+    $default  reduce using rule 8 (S)
+
+
+State 121
+
+   69 LOGICALOREXPR: LOGICALOREXPR T_LOGOR LOGICALANDEXPR .
+   71 LOGICALANDEXPR: LOGICALANDEXPR . T_LOGAND EQUALITYEXPR
+
+    T_LOGAND  shift, and go to state 83
+
+    $default  reduce using rule 69 (LOGICALOREXPR)
+
+
+State 122
+
+   71 LOGICALANDEXPR: LOGICALANDEXPR T_LOGAND EQUALITYEXPR .
+   73 EQUALITYEXPR: EQUALITYEXPR . T_EQ RELEXPR
+   74             | EQUALITYEXPR . T_NEQ RELEXPR
+
+    T_EQ   shift, and go to state 84
+    T_NEQ  shift, and go to state 85
+
+    $default  reduce using rule 71 (LOGICALANDEXPR)
+
+
+State 123
+
+   73 EQUALITYEXPR: EQUALITYEXPR T_EQ RELEXPR .
+   76 RELEXPR: RELEXPR . T_LT ADDEXPR
+   77        | RELEXPR . T_GT ADDEXPR
+   78        | RELEXPR . T_LTEQ ADDEXPR
+   79        | RELEXPR . T_GTEQ ADDEXPR
+
+    T_LT    shift, and go to state 86
+    T_GT    shift, and go to state 87
+    T_LTEQ  shift, and go to state 88
+    T_GTEQ  shift, and go to state 89
+
+    $default  reduce using rule 73 (EQUALITYEXPR)
+
+
+State 124
+
+   74 EQUALITYEXPR: EQUALITYEXPR T_NEQ RELEXPR .
+   76 RELEXPR: RELEXPR . T_LT ADDEXPR
+   77        | RELEXPR . T_GT ADDEXPR
+   78        | RELEXPR . T_LTEQ ADDEXPR
+   79        | RELEXPR . T_GTEQ ADDEXPR
+
+    T_LT    shift, and go to state 86
+    T_GT    shift, and go to state 87
+    T_LTEQ  shift, and go to state 88
+    T_GTEQ  shift, and go to state 89
+
+    $default  reduce using rule 74 (EQUALITYEXPR)
+
+
+State 125
+
+   76 RELEXPR: RELEXPR T_LT ADDEXPR .
+   81 ADDEXPR: ADDEXPR . T_ADD MULTEXPR
+   82        | ADDEXPR . T_SUB MULTEXPR
+
+    T_ADD  shift, and go to state 90
+    T_SUB  shift, and go to state 91
+
+    $default  reduce using rule 76 (RELEXPR)
+
+
+State 126
+
+   77 RELEXPR: RELEXPR T_GT ADDEXPR .
+   81 ADDEXPR: ADDEXPR . T_ADD MULTEXPR
+   82        | ADDEXPR . T_SUB MULTEXPR
+
+    T_ADD  shift, and go to state 90
+    T_SUB  shift, and go to state 91
+
+    $default  reduce using rule 77 (RELEXPR)
+
+
+State 127
+
+   78 RELEXPR: RELEXPR T_LTEQ ADDEXPR .
+   81 ADDEXPR: ADDEXPR . T_ADD MULTEXPR
+   82        | ADDEXPR . T_SUB MULTEXPR
+
+    T_ADD  shift, and go to state 90
+    T_SUB  shift, and go to state 91
+
+    $default  reduce using rule 78 (RELEXPR)
+
+
+State 128
+
+   79 RELEXPR: RELEXPR T_GTEQ ADDEXPR .
+   81 ADDEXPR: ADDEXPR . T_ADD MULTEXPR
+   82        | ADDEXPR . T_SUB MULTEXPR
+
+    T_ADD  shift, and go to state 90
+    T_SUB  shift, and go to state 91
+
+    $default  reduce using rule 79 (RELEXPR)
+
+
+State 129
+
+   81 ADDEXPR: ADDEXPR T_ADD MULTEXPR .
+   84 MULTEXPR: MULTEXPR . T_MUL EXPR
+   85         | MULTEXPR . T_DIV EXPR
+   86         | MULTEXPR . T_MOD EXPR
+
+    T_MUL  shift, and go to state 92
+    T_DIV  shift, and go to state 93
+    T_MOD  shift, and go to state 94
+
+    $default  reduce using rule 81 (ADDEXPR)
+
+
+State 130
+
+   82 ADDEXPR: ADDEXPR T_SUB MULTEXPR .
+   84 MULTEXPR: MULTEXPR . T_MUL EXPR
+   85         | MULTEXPR . T_DIV EXPR
+   86         | MULTEXPR . T_MOD EXPR
+
+    T_MUL  shift, and go to state 92
+    T_DIV  shift, and go to state 93
+    T_MOD  shift, and go to state 94
+
+    $default  reduce using rule 82 (ADDEXPR)
+
+
+State 131
+
+   84 MULTEXPR: MULTEXPR T_MUL EXPR .
+
+    $default  reduce using rule 84 (MULTEXPR)
+
+
+State 132
+
+   85 MULTEXPR: MULTEXPR T_DIV EXPR .
+
+    $default  reduce using rule 85 (MULTEXPR)
+
+
+State 133
+
+   86 MULTEXPR: MULTEXPR T_MOD EXPR .
+
+    $default  reduce using rule 86 (MULTEXPR)
+
+
+State 134
+
+   26 IF: T_IF '(' LOGICALOREXPR ')' . T_OB S T_CB
+
+    T_OB  shift, and go to state 147
+
+
+State 135
+
+   18 FOR: T_FOR '(' ';' ';' . ')'
+   25    | T_FOR '(' ';' ';' . ADDEXPR ')'
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+    ')'    shift, and go to state 148
+
+    ADDEXPR   go to state 149
+    MULTEXPR  go to state 50
+    EXPR      go to state 70
+
+
+State 136
+
+   22 FOR: T_FOR '(' ';' LOGICALOREXPR . ';' ')'
+   23    | T_FOR '(' ';' LOGICALOREXPR . ';' UNREXPR ')'
+   69 LOGICALOREXPR: LOGICALOREXPR . T_LOGOR LOGICALANDEXPR
+
+    T_LOGOR  shift, and go to state 82
+    ';'      shift, and go to state 150
+
+
+State 137
+
+   31 VARIABLE: TYPE T_ID . T_ASSGN LOGICALOREXPR X
+   32         | TYPE T_ID . X
+
+    T_ASSGN  shift, and go to state 111
+    ','      shift, and go to state 112
+
+    $default  reduce using rule 42 (X)
+
+    X  go to state 113
+
+
+State 138
+
+   19 FOR: T_FOR '(' INIT ';' . ';' ')'
+   20    | T_FOR '(' INIT ';' . LOGICALOREXPR ';' ')'
+   21    | T_FOR '(' INIT ';' . ';' ADDEXPR ')'
+   24    | T_FOR '(' INIT ';' . LOGICALOREXPR ';' UNREXPR ')'
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+    ';'    shift, and go to state 151
+
+    LOGICALOREXPR   go to state 152
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 70
+
+
+State 139
+
+   10 S: FOR T_OB S T_CB . S
+
+    T_ID      shift, and go to state 27
+    T_NUM     shift, and go to state 28
+    T_VOID    shift, and go to state 13
+    T_IF      shift, and go to state 29
+    T_FOR     shift, and go to state 30
+    T_CHAR    shift, and go to state 14
+    T_INT     shift, and go to state 15
+    T_DOUBLE  shift, and go to state 16
+    T_STRING  shift, and go to state 17
+    T_UADD    shift, and go to state 31
+    T_USUB    shift, and go to state 32
+    '('       shift, and go to state 33
+
+    ';'       reduce using rule 55 (ARRAYA)
+    $default  reduce using rule 12 (S)
+
+    S               go to state 153
+    UNREXPR         go to state 35
+    FOR             go to state 36
+    IF              go to state 37
+    DECLR           go to state 38
+    VARIABLE        go to state 39
+    ARRAY           go to state 40
+    TYPE            go to state 41
+    ASSGN1          go to state 42
+    VARIABLEA       go to state 43
+    ARRAYA          go to state 44
+    LOGICALOREXPR   go to state 45
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 51
+
+
+State 140
+
+   27 ELSE: T_ELSE T_OB S . T_CB
+
+    T_CB  shift, and go to state 154
+
+
+State 141
+
+   31 VARIABLE: TYPE T_ID T_ASSGN LOGICALOREXPR . X
+   69 LOGICALOREXPR: LOGICALOREXPR . T_LOGOR LOGICALANDEXPR
+
+    T_LOGOR  shift, and go to state 82
+    ','      shift, and go to state 112
+
+    $default  reduce using rule 42 (X)
+
+    X  go to state 155
+
+
+State 142
+
+   41 X: ',' T_ID .
+   51 ASSGN: T_ID . ASSGNOPR LOGICALOREXPR
+
+    T_ASSGN     shift, and go to state 52
+    T_MULASSGN  shift, and go to state 53
+    T_DIVASSGN  shift, and go to state 54
+    T_MODASSGN  shift, and go to state 55
+    T_ADDASSGN  shift, and go to state 56
+    T_SUBASSGN  shift, and go to state 57
+    T_LSHASSGN  shift, and go to state 58
+    T_RSHASSGN  shift, and go to state 59
+    T_ANDASSGN  shift, and go to state 60
+    T_XORASSGN  shift, and go to state 61
+    T_ORASSGN   shift, and go to state 62
+
+    $default  reduce using rule 41 (X)
+
+    ASSGNOPR  go to state 156
+
+
+State 143
+
+   40 X: ',' ASSGN . X
+
+    ','  shift, and go to state 112
+
+    $default  reduce using rule 42 (X)
+
+    X  go to state 157
+
+
+State 144
+
+   47 WOI: '[' . ']' WOI
+   48    | '[' . ']'
+
+    ']'  shift, and go to state 117
+
+
+State 145
+
+   47 WOI: '[' ']' WOI .
+
+    $default  reduce using rule 47 (WOI)
+
+
+State 146
+
+   45 WI: '[' INDEX ']' . WI
+   46   | '[' INDEX ']' .
+
+    '['  shift, and go to state 158
+
+    $default  reduce using rule 46 (WI)
+
+    WI  go to state 159
+
+
+State 147
+
+   26 IF: T_IF '(' LOGICALOREXPR ')' T_OB . S T_CB
+
+    T_ID      shift, and go to state 27
+    T_NUM     shift, and go to state 28
+    T_VOID    shift, and go to state 13
+    T_IF      shift, and go to state 29
+    T_FOR     shift, and go to state 30
+    T_CHAR    shift, and go to state 14
+    T_INT     shift, and go to state 15
+    T_DOUBLE  shift, and go to state 16
+    T_STRING  shift, and go to state 17
+    T_UADD    shift, and go to state 31
+    T_USUB    shift, and go to state 32
+    '('       shift, and go to state 33
+
+    ';'       reduce using rule 55 (ARRAYA)
+    $default  reduce using rule 12 (S)
+
+    S               go to state 160
+    UNREXPR         go to state 35
+    FOR             go to state 36
+    IF              go to state 37
+    DECLR           go to state 38
+    VARIABLE        go to state 39
+    ARRAY           go to state 40
+    TYPE            go to state 41
+    ASSGN1          go to state 42
+    VARIABLEA       go to state 43
+    ARRAYA          go to state 44
+    LOGICALOREXPR   go to state 45
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 51
+
+
+State 148
+
+   18 FOR: T_FOR '(' ';' ';' ')' .
+
+    $default  reduce using rule 18 (FOR)
+
+
+State 149
+
+   25 FOR: T_FOR '(' ';' ';' ADDEXPR . ')'
+   81 ADDEXPR: ADDEXPR . T_ADD MULTEXPR
+   82        | ADDEXPR . T_SUB MULTEXPR
+
+    T_ADD  shift, and go to state 90
+    T_SUB  shift, and go to state 91
+    ')'    shift, and go to state 161
+
+
+State 150
+
+   22 FOR: T_FOR '(' ';' LOGICALOREXPR ';' . ')'
+   23    | T_FOR '(' ';' LOGICALOREXPR ';' . UNREXPR ')'
+
+    T_ID    shift, and go to state 66
+    T_NUM   shift, and go to state 28
+    T_UADD  shift, and go to state 31
+    T_USUB  shift, and go to state 32
+    '('     shift, and go to state 33
+    ')'     shift, and go to state 162
+
+    UNREXPR         go to state 163
+    LOGICALOREXPR   go to state 45
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 51
+
+
+State 151
+
+   19 FOR: T_FOR '(' INIT ';' ';' . ')'
+   21    | T_FOR '(' INIT ';' ';' . ADDEXPR ')'
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+    ')'    shift, and go to state 164
+
+    ADDEXPR   go to state 165
+    MULTEXPR  go to state 50
+    EXPR      go to state 70
+
+
+State 152
+
+   20 FOR: T_FOR '(' INIT ';' LOGICALOREXPR . ';' ')'
+   24    | T_FOR '(' INIT ';' LOGICALOREXPR . ';' UNREXPR ')'
+   69 LOGICALOREXPR: LOGICALOREXPR . T_LOGOR LOGICALANDEXPR
+
+    T_LOGOR  shift, and go to state 82
+    ';'      shift, and go to state 166
+
+
+State 153
+
+   10 S: FOR T_OB S T_CB S .
+
+    $default  reduce using rule 10 (S)
+
+
+State 154
+
+   27 ELSE: T_ELSE T_OB S T_CB .
+
+    $default  reduce using rule 27 (ELSE)
+
+
+State 155
+
+   31 VARIABLE: TYPE T_ID T_ASSGN LOGICALOREXPR X .
+
+    $default  reduce using rule 31 (VARIABLE)
+
+
+State 156
+
+   51 ASSGN: T_ID ASSGNOPR . LOGICALOREXPR
+
+    T_ID   shift, and go to state 66
+    T_NUM  shift, and go to state 28
+    '('    shift, and go to state 33
+
+    LOGICALOREXPR   go to state 167
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 70
+
+
+State 157
+
+   40 X: ',' ASSGN X .
+
+    $default  reduce using rule 40 (X)
+
+
+State 158
+
+   45 WI: '[' . INDEX ']' WI
+   46   | '[' . INDEX ']'
+
+    T_ID   shift, and go to state 115
+    T_NUM  shift, and go to state 116
+
+    INDEX  go to state 118
+
+
+State 159
+
+   45 WI: '[' INDEX ']' WI .
+
+    $default  reduce using rule 45 (WI)
+
+
+State 160
+
+   26 IF: T_IF '(' LOGICALOREXPR ')' T_OB S . T_CB
+
+    T_CB  shift, and go to state 168
+
+
+State 161
+
+   25 FOR: T_FOR '(' ';' ';' ADDEXPR ')' .
+
+    $default  reduce using rule 25 (FOR)
+
+
+State 162
+
+   22 FOR: T_FOR '(' ';' LOGICALOREXPR ';' ')' .
+
+    $default  reduce using rule 22 (FOR)
+
+
+State 163
+
+   23 FOR: T_FOR '(' ';' LOGICALOREXPR ';' UNREXPR . ')'
+
+    ')'  shift, and go to state 169
+
+
+State 164
+
+   19 FOR: T_FOR '(' INIT ';' ';' ')' .
+
+    $default  reduce using rule 19 (FOR)
+
+
+State 165
+
+   21 FOR: T_FOR '(' INIT ';' ';' ADDEXPR . ')'
+   81 ADDEXPR: ADDEXPR . T_ADD MULTEXPR
+   82        | ADDEXPR . T_SUB MULTEXPR
+
+    T_ADD  shift, and go to state 90
+    T_SUB  shift, and go to state 91
+    ')'    shift, and go to state 170
+
+
+State 166
+
+   20 FOR: T_FOR '(' INIT ';' LOGICALOREXPR ';' . ')'
+   24    | T_FOR '(' INIT ';' LOGICALOREXPR ';' . UNREXPR ')'
+
+    T_ID    shift, and go to state 66
+    T_NUM   shift, and go to state 28
+    T_UADD  shift, and go to state 31
+    T_USUB  shift, and go to state 32
+    '('     shift, and go to state 33
+    ')'     shift, and go to state 171
+
+    UNREXPR         go to state 172
+    LOGICALOREXPR   go to state 45
+    LOGICALANDEXPR  go to state 46
+    EQUALITYEXPR    go to state 47
+    RELEXPR         go to state 48
+    ADDEXPR         go to state 49
+    MULTEXPR        go to state 50
+    EXPR            go to state 51
+
+
+State 167
+
+   51 ASSGN: T_ID ASSGNOPR LOGICALOREXPR .
+   69 LOGICALOREXPR: LOGICALOREXPR . T_LOGOR LOGICALANDEXPR
+
+    T_LOGOR  shift, and go to state 82
+
+    $default  reduce using rule 51 (ASSGN)
+
+
+State 168
+
+   26 IF: T_IF '(' LOGICALOREXPR ')' T_OB S T_CB .
+
+    $default  reduce using rule 26 (IF)
+
+
+State 169
+
+   23 FOR: T_FOR '(' ';' LOGICALOREXPR ';' UNREXPR ')' .
+
+    $default  reduce using rule 23 (FOR)
+
+
+State 170
+
+   21 FOR: T_FOR '(' INIT ';' ';' ADDEXPR ')' .
+
+    $default  reduce using rule 21 (FOR)
+
+
+State 171
+
+   20 FOR: T_FOR '(' INIT ';' LOGICALOREXPR ';' ')' .
+
+    $default  reduce using rule 20 (FOR)
+
+
+State 172
+
+   24 FOR: T_FOR '(' INIT ';' LOGICALOREXPR ';' UNREXPR . ')'
+
+    ')'  shift, and go to state 173
+
+
+State 173
+
+   24 FOR: T_FOR '(' INIT ';' LOGICALOREXPR ';' UNREXPR ')' .
+
+    $default  reduce using rule 24 (FOR)

@@ -1,0 +1,67 @@
+Abstract Syntax Tree
+└──CLASS DECLARATION
+    ├──modifier
+    │   └──(access modifier, public)
+    ├──(classname, public)
+    └──METHOD DECLARATION
+        ├──modifier
+        │   ├──(access modifier, public)
+        │   └──(access modifier, static)
+        ├──(datatype, void)
+        ├──(datatype, String)
+        └──DECLARATION
+            ├──VARIABLE DECLARATION
+            │   └──variable initialisation
+            │       ├──(datatype, int)
+            │       ├──(id, a)
+            │       └──(num, 10)
+            └──INITIALIZATION
+                ├──ASSIGNMENT STATEMENT
+                │   └──=
+                │       ├──(id, a)
+                │       └──+
+                │           ├──(id, a)
+                │           └──(num, 15)
+                └──IF ELSE STATEMNET
+                    ├──IF STATEMENT
+                    │   ├──>
+                    │   │   ├──(id, a)
+                    │   │   └──(num, 5)
+                    │   └──DECLARATION
+                    │       └──VARIABLE DECLARATION
+                    │           └──variable initialisation
+                    │               ├──(datatype, int)
+                    │               ├──(id, b)
+                    │               └──(num, 15)
+                    ├──ELSE STATEMENT
+                    │   └──DECLARATION
+                    │       └──VARIABLE DECLARATION
+                    │           └──variable initialisation
+                    │               ├──(datatype, int)
+                    │               ├──(id, c)
+                    │               └──(num, 20)
+                    └──FOR LOOP
+                        ├──FOR CONDITION
+                        │   ├──variable initialisation
+                        │   │   ├──(datatype, int)
+                        │   │   ├──(id, z)
+                        │   │   └──(num, 10)
+                        │   ├──<
+                        │   │   ├──(id, z)
+                        │   │   └──(num, 20)
+                        │   └──UNARY OPERATION
+                        │       ├──(id, z)
+                        │       └──(increment, ++)
+                        ├──DECLARATION
+                        │   └──VARIABLE DECLARATION
+                        │       └──variable initialisation
+                        │           ├──(datatype, int)
+                        │           ├──(id, k)
+                        │           └──(num, 10)
+                        └──DECLARATION
+                            └──VARIABLE DECLARATION
+                                └──variable initialisation
+                                    ├──(datatype, int)
+                                    ├──(id, sam)
+                                    └──(num, 1)
+

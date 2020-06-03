@@ -1,0 +1,17 @@
+a = 3
+b = 4
+c = 5
+T0 = a + 3
+T1 = T0 + b
+T2 = T1 + c
+a = T2
+T3 = 0
+if T3 goto L1
+goto L2
+L1:
+j = 1
+goto L3
+L2:
+i = 0
+b = 10
+L3:

@@ -1,0 +1,22 @@
+c = 10
+T1 = 3 + 5
+T2 = 3 + 5
+T3 = T1 + T2
+T4 = T1 + T2
+a = 10
+a = 3 + 5
+a = T3
+L1:
+T4 = a < 25
+if T4 goto L2
+goto L3
+L4:
+T5 = a + 1
+a = T5
+goto L1
+L2:
+m = 15
+goto L4
+L3:
+T6 = 3 * a
+k = T6

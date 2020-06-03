@@ -1,0 +1,134 @@
+Keyword : public
+Keyword : class
+Identifier : a
+Brackets : {
+Keyword : public
+Keyword : static
+Keyword : void
+Keyword : main
+Brackets : (
+Keyword : String
+Brackets : [
+Brackets : ]
+Keyword : args
+Brackets : )
+Brackets : {
+Keyword : int
+Identifier : a
+Assignment operator : =
+NUM : 3
+semi-colon : ;
+Keyword : int
+Identifier : b
+Assignment operator : =
+NUM : 4
+semi-colon : ;
+Keyword : int
+Identifier : c
+Assignment operator : =
+NUM : 5
+semi-colon : ;
+Identifier : a
+Assignment operator : =
+Identifier : a
+Arithmetic operator : +
+NUM : 3
+Arithmetic operator : +
+Identifier : b
+Arithmetic operator : +
+Identifier : c
+semi-colon : ;
+Keyword : if
+Brackets : (
+Identifier : a
+Comparison operator : <
+NUM : 2
+Brackets : )
+Brackets : {
+Keyword : int
+Identifier : j
+Assignment operator : =
+NUM : 1
+semi-colon : ;
+Brackets : }
+Keyword : else
+Brackets : {
+Keyword : int
+Identifier : i
+Assignment operator : =
+NUM : 0
+semi-colon : ;
+Identifier : b
+Assignment operator : =
+NUM : 10
+semi-colon : ;
+Brackets : }
+Brackets : }
+Brackets : }
+Keyword : public
+Keyword : class
+Identifier : a
+Brackets : {
+Keyword : public
+Keyword : static
+Keyword : void
+Keyword : main
+Brackets : (
+Keyword : String
+Brackets : [
+Brackets : ]
+Keyword : args
+Brackets : )
+Brackets : {
+Keyword : int
+Identifier : a
+Assignment operator : =
+NUM : 3
+semi-colon : ;
+Keyword : int
+Identifier : b
+Assignment operator : =
+NUM : 4
+semi-colon : ;
+Keyword : int
+Identifier : c
+Assignment operator : =
+NUM : 5
+semi-colon : ;
+Identifier : a
+Assignment operator : =
+Identifier : a
+Arithmetic operator : +
+NUM : 3
+Arithmetic operator : +
+Identifier : b
+Arithmetic operator : +
+Identifier : c
+semi-colon : ;
+Keyword : if
+Brackets : (
+Identifier : a
+Comparison operator : <
+NUM : 2
+Brackets : )
+Brackets : {
+Keyword : int
+Identifier : j
+Assignment operator : =
+NUM : 1
+semi-colon : ;
+Brackets : }
+Keyword : else
+Brackets : {
+Keyword : int
+Identifier : i
+Assignment operator : =
+NUM : 0
+semi-colon : ;
+Identifier : b
+Assignment operator : =
+NUM : 10
+semi-colon : ;
+Brackets : }
+Brackets : }
+Brackets : }

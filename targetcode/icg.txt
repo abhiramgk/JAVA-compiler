@@ -1,0 +1,16 @@
+b[3] = 3
+a = b[3]
+a = T1
+L1:
+T0 = b[2] < 25
+if T0 goto L2
+goto L3
+L4:
+T1 = a + 1
+goto L1
+L2:
+m = 15
+goto L4
+L3:
+T2 = 3 * a
+k = T2 + T1

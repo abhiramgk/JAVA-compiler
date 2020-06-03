@@ -1,0 +1,19 @@
+b = 2
+c = 1
+d = 0
+a = 3
+a = 20
+L1:
+T0 = a < 25
+if T0 goto L2
+goto L3
+L4:
+T1 = a + 1
+a = T1
+goto L1
+L2:
+m = 15
+goto L4
+L3:
+T2 = 3 * a
+k = T2
